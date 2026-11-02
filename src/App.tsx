@@ -761,7 +761,11 @@ export default function App() {
       return null;
     } catch (err: any) {
       console.error('Google sign in error:', err);
-      showToast('Google Sign-in was cancelled or encountered an error.');
+      if (err?.code === 'auth/unauthorized-domain' || err?.message?.includes('unauthorized-domain')) {
+        showToast('Unauthorized domain: Add this domain in Firebase Console under Authentication > Settings > Authorized Domains.');
+      } else {
+        showToast('Google Sign-in was cancelled or encountered an error.');
+      }
       return null;
     }
   };

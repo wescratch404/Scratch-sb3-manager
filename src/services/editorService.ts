@@ -82,7 +82,8 @@ export async function openProjectInEditorWithFile(
  * the specified project file immediately loaded, running, and editable!
  */
 export function openSb3ProjectInEditorTab(projectId: string): void {
-  const url = `${window.location.origin}${window.location.pathname}?editor=${encodeURIComponent(projectId)}`;
-  openEditorInNewTab(url);
+  const currentUrl = new URL(window.location.href);
+  currentUrl.searchParams.set('editor', projectId);
+  openEditorInNewTab(currentUrl.toString());
 }
 
